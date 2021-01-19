@@ -1,0 +1,19 @@
+---
+
+- name: upgrade packages
+  apt:
+    upgrade: safe
+    update_cache: yes
+    cache_valid_time: 600
+  become: yes
+
+- name: install misc packages
+  apt:
+    name:
+      - nano
+      - htop
+      - git
+    state: present
+    update_cache: yes
+    cache_valid_time: 600
+  become: yes

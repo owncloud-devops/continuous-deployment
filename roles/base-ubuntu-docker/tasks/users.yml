@@ -1,0 +1,55 @@
+---
+
+- name: Add docker group
+  group:
+    name: docker
+    gid: 115
+    state: present
+  become: yes
+
+- name: Add admin group
+  group:
+    name: "{{ main_admin_user }}"
+    gid: 1000
+    state: present
+  become: yes
+
+- name: Add admin user
+  user:
+    name: "{{ main_admin_user }}"
+    comment: ownCloud Administrator
+    uid: 1000
+    create_home: yes
+    append: yes
+    groups:
+      - "{{ main_admin_user }}"
+      - sudo
+      - docker
+    shell: /bin/bash
+    state: present
+  become: yes
+
+- name: passwordless sudo for sudo group
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^%sudo'
+    line: 'sudo ALL=(ALL) NOPASSWD:ALL'
+    validate: 'visudo -cf %s'
+  become: yes
+
+- name: passwordless sudo for admin group
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^%admin'
+    line: 'admin ALL=(ALL) NOPASSWD:ALL'
+    validate: 'visudo -cf %s'
+  become: yes
+
+- name: set authorized keys for admin user
+  authorized_key:
+    user: "{{ main_admin_user }}"
+    state: present
+    exclusive: True
+    key: https://gist.githubusercontent.com/wkloucek/ba0707a7433a6376bb01d0b5acf47dcf/raw/42b91ac0623bb02e28de0c9f5c54b42c2b46a578/wkloucek.keys

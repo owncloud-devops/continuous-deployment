@@ -1,0 +1,9 @@
+---
+
+- name: apply os hardening
+  include_role: 
+    name: devsec.hardening.os_hardening
+  vars:
+    sysctl_overwrite:
+        net.ipv4.ip_forward: 1
+    ansible_become: yes

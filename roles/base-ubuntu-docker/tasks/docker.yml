@@ -1,0 +1,18 @@
+---
+
+- name: install docker and docker-compose
+  apt:
+    name:
+      - docker.io
+      - docker-compose
+    state: present
+    update_cache: yes
+    cache_valid_time: 600
+  become: yes
+
+- name: enable / start docker
+  systemd:
+    state: started
+    enabled: yes
+    name: docker
+  become: yes

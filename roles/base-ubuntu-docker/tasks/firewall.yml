@@ -1,0 +1,14 @@
+---
+
+- name: Allow SSH in UFW
+  ufw:
+    rule: allow
+    port: "22"
+    proto: tcp
+  become: yes
+
+- name: Set firewall default policy
+  ufw:
+    state: enabled
+    policy: deny
+  become: yes
