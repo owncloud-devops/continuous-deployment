@@ -13,8 +13,9 @@
 1. add your server to the inventory file `inventory-base-ubuntu-docker.yml`
 1. run `ansible-playbook -i inventory-base-ubuntu-docker.yml playbook-base-ubuntu-docker.yml`
 
-### run all (create hcloud server, configure ubuntu, deploy docker-compose project)
+### run all (create hcloud server, add cloudflare DNS record, configure ubuntu, deploy docker-compose project)
 
 1. add your server and docker-compose projects to `servers.json`
 1. run `export HCLOUD_API_TOKEN=...` with a valid Hetzner cloud api token
+1. run `export CLOUDFLARE_API_TOKEN=...` with a valid Cloudflare api token
 1. run `ansible-playbook playbook-all.yml`

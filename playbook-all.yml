@@ -11,12 +11,14 @@
       set_fact:
         servers: "{{ servers.stdout | from_yaml }}"
 
-    - name: create / check all servers
-      include_role:
-        name: hetzner
+    - name: set up servers and DNS entries
+      include_tasks: tasks/servers_dns_loop.yml
       vars:
-        server: "{{ item }}"
+        current_server: "{{ loop_server }}"
+      no_log: yes # could contain secrets
       with_items: "{{ servers }}"
+      loop_control:
+        loop_var: loop_server
 
     - name: wait for servers to be up
       wait_for:
@@ -25,21 +27,36 @@
 - name: provision / deploy on servers
   hosts: all:!localhost
 
+  roles:
+    - role: base-ubuntu-docker
+
+
   tasks:
     - name: ping servers
       ping:
 
+    - name: switch user (this is always safe after base-ubuntu-docker role is executed)
+      set_fact:
+        ansible_user: admin
+
     - name: reset ssh connection to apply possible user change
       meta: reset_connection
+
+    - name: Run whoami without become.
+      command: whoami
+      changed_when: false
+      become: false
+      register: whoami
+
+    - name: ensure right user is logged in
+      fail: "wrong user is used! should: {{ ansible_user }} | is: {{ whoami.stdout }}"
+      when: whoami.stdout != ansible_user
 
     - name: deploy docker-compose project
       include_role:
         name: docker-compose-deploy
       vars:
-        docker_compose_project: "{{ docker_compose_project }}"
+        docker_compose_project: "{{ loop_docker_compose_project }}"
       with_items: "{{ docker_compose_projects }}"
       loop_control:
-        loop_var: docker_compose_project
-
-  roles:
-    - role: base-ubuntu-docker
+        loop_var: loop_docker_compose_project

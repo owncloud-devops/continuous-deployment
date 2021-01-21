@@ -20,9 +20,6 @@
   set_fact:
     docker_compose_env_file: "{{ docker_compose_project_path }}/.env"
 
-- debug:
-    msg: "{{ docker_compose_env_file }}"
-
 - name: create target folder
   file:
     path: "/{{ docker_compose_project_root_path }}"

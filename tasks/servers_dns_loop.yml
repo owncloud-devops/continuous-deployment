@@ -1,0 +1,13 @@
+---
+
+- name: create / check all servers
+  include_role:
+    name: hetzner
+  vars:
+    server: "{{ current_server }}"
+
+- name: create / check DNS entries
+  include_role:
+    name: cloudflare
+  vars:
+    server: "{{ current_server }}"

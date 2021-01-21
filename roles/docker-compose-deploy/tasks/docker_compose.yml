@@ -21,23 +21,11 @@
     - set_fact:
         network_name: "{{ docker_compose_up.msg | regex_search('`docker network create (.+)`', '\\1') | first }}"
 
-    - name: show external network to be created
-      debug:
-        msg: "external network `{{ network_name }}` will be created"
-
     - name: create external network
       docker_network:
         name: "{{ network_name }}"
 
   when: docker_compose_up.msg is defined and docker_compose_up.msg is search("Network .* declared as external, but could not be found. Please create the network manually using `docker network create .*` and try again")
-
-- name: docker_compose_up.failed
-  debug:
-    msg: "{{ not docker_compose_up.failed }}"
-
-- name: fail_recovery_possible
-  debug:
-    msg: "{{ fail_recovery_possible }}"
 
 # recursive calling of it self in recoverable error cases as long as "until" does not work on includes
 - include_tasks: docker_compose.yml

@@ -1,0 +1,17 @@
+---
+- name: get cloudflare api key from environment
+  set_fact:
+    cloudflare_api_token: "{{ lookup('env', 'CLOUDFLARE_API_TOKEN') }}"
+
+- name: get server ip
+  set_fact:
+    server_ip: "{{ hostvars[server.name].ansible_ssh_host }}"
+
+- name: loop over domains
+  include: tasks/domain.yml
+  vars:
+    domain: "{{ loop_domain }}"
+    cloudflare_server_ip: "{{ server_ip }}"
+  with_items: "{{ server.domains }}"
+  loop_control:
+    loop_var: loop_domain

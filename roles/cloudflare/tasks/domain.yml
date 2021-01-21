@@ -1,0 +1,26 @@
+---
+- name: get zone from FQDN
+  set_fact:
+    cloudflare_zone: "{{ domain.split('.')[-2:] | join('.') }}"
+    cloudflare_subdomain: "{{ domain.split('.')[:-2] | join('.') }}"
+
+# deleting and adding a record is the only way
+# to ensure that there aren't multiple records
+# for the same domain
+
+- name: delete records for this domain
+  community.general.cloudflare_dns:
+    zone: "{{ cloudflare_zone }}"
+    type: A
+    record: "{{ cloudflare_subdomain }}"
+    api_token: "{{ cloudflare_api_token }}"
+    state: absent
+
+- name: add records for this domain
+  community.general.cloudflare_dns:
+    zone: "{{ cloudflare_zone }}"
+    record: "{{ cloudflare_subdomain }}"
+    type: A
+    value: "{{ cloudflare_server_ip }}"
+    api_token: "{{ cloudflare_api_token }}"
+    state: present

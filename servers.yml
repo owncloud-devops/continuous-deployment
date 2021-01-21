@@ -6,6 +6,8 @@
   labels:
     owner: wkloucek
     for: server-provisioning
+  domains:
+    - "*.continuous.owncloud.works"
   vars:
     docker_compose_projects:
       - name: ocis
@@ -18,7 +20,7 @@
           OCIS_DOCKER_TAG: latest
           OCIS_DOMAIN: ocis.continuous.owncloud.works
           COMPOSE_FILE: docker-compose.yml:monitoring_tracing/docker-compose-additions.yml
-      - name: ocis-monitoring
+      - name: monitoring
         git_url: https://github.com/owncloud-devops/monitoring-tracing-client.git
         ref: master
         env:
