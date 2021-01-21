@@ -1,0 +1,11 @@
+---
+
+- name: get project from git
+  git:
+    repo: "{{ docker_compose_project.git_url }}"
+    dest: "{{ docker_compose_project_root_path }}"
+    accept_hostkey: yes
+    depth: "1"
+    force: yes
+    version: "{{ docker_compose_project.ref }}"
+    update: yes

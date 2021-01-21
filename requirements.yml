@@ -3,3 +3,6 @@
 collections:
   - name: devsec.hardening
     version: 7.0.0
+
+  - name: hetzner.hcloud
+    version: 1.2.1

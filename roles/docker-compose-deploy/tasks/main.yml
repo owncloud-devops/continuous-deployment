@@ -1,0 +1,7 @@
+---
+
+- include: tasks/paths.yml
+- include: tasks/git.yml
+- include: tasks/env.yml
+- include: tasks/docker_compose_handler.yml
+- include: tasks/docker-clean.yml

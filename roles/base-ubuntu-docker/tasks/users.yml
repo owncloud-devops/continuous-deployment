@@ -9,20 +9,20 @@
 
 - name: Add admin group
   group:
-    name: "{{ main_admin_user }}"
+    name: admin
     gid: 1000
     state: present
   become: yes
 
 - name: Add admin user
   user:
-    name: "{{ main_admin_user }}"
+    name: admin
     comment: ownCloud Administrator
     uid: 1000
     create_home: yes
     append: yes
     groups:
-      - "{{ main_admin_user }}"
+      - admin
       - sudo
       - docker
     shell: /bin/bash
@@ -49,7 +49,8 @@
 
 - name: set authorized keys for admin user
   authorized_key:
-    user: "{{ main_admin_user }}"
+    user: admin
     state: present
     exclusive: True
+    #TODO: take from master of this repository
     key: https://gist.githubusercontent.com/wkloucek/ba0707a7433a6376bb01d0b5acf47dcf/raw/42b91ac0623bb02e28de0c9f5c54b42c2b46a578/wkloucek.keys

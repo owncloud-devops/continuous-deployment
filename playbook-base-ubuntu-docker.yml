@@ -6,9 +6,6 @@
   tasks:
   - name: ping servers
     ping:
-    
 
   roles:
   - role: base-ubuntu-docker
-
-  

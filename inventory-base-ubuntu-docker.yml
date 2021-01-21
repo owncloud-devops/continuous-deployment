@@ -1,0 +1,8 @@
+---
+
+all:
+  hosts:
+    test-host:
+      ansible_port: 22
+      ansible_host: x.x.x.x
+      ansible_user: root

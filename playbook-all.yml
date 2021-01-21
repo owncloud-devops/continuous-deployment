@@ -1,0 +1,48 @@
+---
+
+- name: create servers
+  hosts: localhost
+
+  tasks:
+  - name: load config file
+    shell: cat servers.json
+    register: servers
+
+  - name: load config
+    set_fact:
+      servers: "{{ servers.stdout }}"
+
+  - name: create / check all servers
+    include_role:
+      name: hetzner
+    vars:
+      server: "{{ item }}"
+    with_items: "{{ servers }}"
+
+  - name: wait for servers to be up
+    wait_for:
+      timeout: 30
+
+- name: provision / deploy on servers
+  hosts: all:!localhost
+
+  tasks:
+  - name: ping servers
+    ping:
+  
+  - name: reset ssh connection to apply possible user change
+    meta: reset_connection
+  
+  - name: deploy docker-compose project
+    include_role:
+      name: docker-compose-deploy
+    vars:
+      docker_compose_project: "{{ docker_compose_project }}"
+    with_items: "{{ docker_compose_projects }}"
+    loop_control:
+        loop_var: docker_compose_project
+
+  #roles:
+  #- role: base-ubuntu-docker
+
+    
