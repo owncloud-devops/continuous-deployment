@@ -1,6 +1,0 @@
----
-
-# TODO: docker-compose.override.yml if needed
-
-# this may call itself again in recoverable error cases
-- include: tasks/docker_compose.yml

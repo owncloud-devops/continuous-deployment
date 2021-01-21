@@ -1,9 +1,8 @@
 ---
-
 - name: set default docker_compose_root
   set_fact:
     docker_compose_path: "."
-  
+
 - name: set docker_compose_root
   set_fact:
     docker_compose_path: "{{ docker_compose_project.docker_compose_path }}"
@@ -21,7 +20,6 @@
   set_fact:
     docker_compose_env_file: "{{ docker_compose_project_path }}/.env"
 
-
 - debug:
     msg: "{{ docker_compose_env_file }}"
 
@@ -30,6 +28,6 @@
     path: "/{{ docker_compose_project_root_path }}"
     owner: admin
     group: admin
-    mode: '0744'
+    mode: "0744"
     state: directory
   become: yes

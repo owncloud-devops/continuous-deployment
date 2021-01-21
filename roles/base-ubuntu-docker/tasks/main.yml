@@ -1,5 +1,4 @@
 ---
-
 - include: tasks/ubuntu.yml
 - include: tasks/docker.yml
 - include: tasks/users.yml

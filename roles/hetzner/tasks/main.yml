@@ -1,12 +1,11 @@
 ---
-
 - name: get hcloud api key from environment
   set_fact:
     hcloud_api_token: "{{ lookup('env', 'HCLOUD_API_TOKEN') }}"
 
 - name: reset values
   set_fact:
-    hcloud_server: {"hcloud_server_info":[]}
+    hcloud_server: { "hcloud_server_info": [] }
     hcloud_server_labels: {}
     ansible_user: "root"
 

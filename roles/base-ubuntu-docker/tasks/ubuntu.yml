@@ -1,5 +1,4 @@
 ---
-
 - name: upgrade packages
   apt:
     upgrade: safe

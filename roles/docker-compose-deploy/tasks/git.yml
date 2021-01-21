@@ -1,5 +1,4 @@
 ---
-
 - name: get project from git
   git:
     repo: "{{ docker_compose_project.git_url }}"

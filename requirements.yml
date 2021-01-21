@@ -1,5 +1,4 @@
 ---
-
 collections:
   - name: devsec.hardening
     version: 7.0.0

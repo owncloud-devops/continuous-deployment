@@ -1,5 +1,4 @@
 ---
-
 - name: Add docker group
   group:
     name: docker
@@ -33,18 +32,18 @@
   lineinfile:
     path: /etc/sudoers
     state: present
-    regexp: '^%sudo'
-    line: 'sudo ALL=(ALL) NOPASSWD:ALL'
-    validate: 'visudo -cf %s'
+    regexp: "^%sudo"
+    line: "sudo ALL=(ALL) NOPASSWD:ALL"
+    validate: "visudo -cf %s"
   become: yes
 
 - name: passwordless sudo for admin group
   lineinfile:
     path: /etc/sudoers
     state: present
-    regexp: '^%admin'
-    line: 'admin ALL=(ALL) NOPASSWD:ALL'
-    validate: 'visudo -cf %s'
+    regexp: "^%admin"
+    line: "admin ALL=(ALL) NOPASSWD:ALL"
+    validate: "visudo -cf %s"
   become: yes
 
 - name: set authorized keys for admin user

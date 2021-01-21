@@ -1,5 +1,4 @@
 ---
-
 - name: docker prune everything
   docker_prune:
     containers: yes

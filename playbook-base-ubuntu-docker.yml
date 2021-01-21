@@ -1,11 +1,10 @@
 ---
-
 - name: provision servers
   hosts: all
 
   tasks:
-  - name: ping servers
-    ping:
+    - name: ping servers
+      ping:
 
   roles:
-  - role: base-ubuntu-docker
+    - role: base-ubuntu-docker

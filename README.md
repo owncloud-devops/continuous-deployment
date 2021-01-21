@@ -1,13 +1,12 @@
 # Server Provisioning
 
-
 ## Usage
 
 ### Install requirements
+
 1. run `pip install -r py-requirements.txt`
 1. run `ansible-galaxy role install -r requirements.yml`
 1. run `ansible-galaxy collection install -r requirements.yml`
-
 
 ### run `docker-ubuntu-docker` role on existing host
 
