@@ -51,5 +51,4 @@
     user: admin
     state: present
     exclusive: True
-    #TODO: take from master of this repository
-    key: https://gist.githubusercontent.com/wkloucek/ba0707a7433a6376bb01d0b5acf47dcf/raw/42b91ac0623bb02e28de0c9f5c54b42c2b46a578/wkloucek.keys
+    key: https://raw.githubusercontent.com/owncloud-devops/server-provisioning/master/authorized_keys

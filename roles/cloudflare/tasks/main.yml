@@ -9,9 +9,6 @@
 
 - name: loop over domains
   include: tasks/domain.yml
-  vars:
-    domain: "{{ loop_domain }}"
-    cloudflare_server_ip: "{{ server_ip }}"
   with_items: "{{ server.domains }}"
   loop_control:
-    loop_var: loop_domain
+    loop_var: domain

@@ -13,12 +13,10 @@
 
     - name: set up servers and DNS entries
       include_tasks: tasks/servers_dns_loop.yml
-      vars:
-        current_server: "{{ loop_server }}"
       no_log: yes # could contain secrets
       with_items: "{{ servers }}"
       loop_control:
-        loop_var: loop_server
+        loop_var: server
 
     - name: wait for servers to be up
       wait_for:
@@ -55,8 +53,6 @@
     - name: deploy docker-compose project
       include_role:
         name: docker-compose-deploy
-      vars:
-        docker_compose_project: "{{ loop_docker_compose_project }}"
       with_items: "{{ docker_compose_projects }}"
       loop_control:
-        loop_var: loop_docker_compose_project
+        loop_var: docker_compose_project
