@@ -3,8 +3,18 @@
   hosts: localhost
 
   tasks:
+
+    - name: get hcloud api key from environment
+      set_fact:
+        config_file: "{{ lookup('env', 'CONTINUOUS_DEPLOY_SERVERS_CONFIG') }}"
+
+    - name: set config file default
+      set_fact:
+        config_file: "servers.yml"
+      when: config_file == ""
+
     - name: load config file
-      shell: cat servers.yml
+      shell: "cat {{ config_file }}"
       register: servers
 
     - name: load config
