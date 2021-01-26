@@ -45,7 +45,7 @@
     server_type: "{{ server.server_type }}"
     image: "{{ server.image }}"
     location: "{{ server.location }}"
-    ssh_keys: " {{ server.ssh_key_names }}"
+    ssh_keys: "{{ server.ssh_key_names }}"
     labels: "{{ hcloud_server_labels }}"
     state: present
   register: hcloud_server
