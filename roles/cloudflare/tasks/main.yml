@@ -5,10 +5,10 @@
 
 - name: get server ip
   set_fact:
-    server_ip: "{{ hostvars[server.name].ansible_ssh_host }}"
+    server_ip: "{{ hostvars[config.name].ansible_ssh_host }}"
 
 - name: loop over domains
   include: tasks/domain.yml
-  with_items: "{{ server.domains }}"
+  with_items: "{{ config.domains }}"
   loop_control:
     loop_var: domain

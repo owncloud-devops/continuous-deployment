@@ -19,14 +19,14 @@
 
     - name: load config
       set_fact:
-        servers: "{{ servers.stdout | from_yaml }}"
+        configs: "{{ servers.stdout | from_yaml }}"
 
     - name: set up servers and DNS entries
-      include_tasks: tasks/servers_dns_loop.yml
+      include_tasks: tasks/config_loop.yml
       no_log: yes # could contain secrets
-      with_items: "{{ servers }}"
+      with_items: "{{ configs }}"
       loop_control:
-        loop_var: server
+        loop_var: config
 
     - name: wait for servers to be up
       wait_for:

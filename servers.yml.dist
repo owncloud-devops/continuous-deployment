@@ -1,16 +1,21 @@
 ---
 - name: server-provisioning-test
-  server_type: cx21
-  image: ubuntu-20.04
-  location: nbg1
-  ssh_key_names:
-    - owncloud-ocis@drone.owncloud.com
-    - wkloucek@owncloud.com
-  labels:
-    owner: wkloucek
-    for: server-provisioning
+
+  server:
+    server_type: cx21
+    image: ubuntu-20.04
+    location: nbg1
+    inital_ssh_key_names:
+      - owncloud-ocis@drone.owncloud.com
+      - wkloucek@owncloud.com
+    labels:
+      owner: wkloucek
+      for: continuous-deployment
+    rebuild: $REBUILD # / true / false
+
   domains:
     - "*.continuous.owncloud.works"
+
   vars:
     docker_compose_projects:
       - name: ocis

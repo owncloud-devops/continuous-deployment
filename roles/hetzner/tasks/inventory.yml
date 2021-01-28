@@ -1,0 +1,8 @@
+---
+- name: add hcloud server to inventory
+  add_host:
+    hostname: "{{ hcloud_server.name }}"
+    ansible_ssh_host: "{{ hcloud_server.ipv4_address }}"
+    ansible_user: "{{ ansible_user }}"
+    ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
+  args: "{{ config.vars }}"

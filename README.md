@@ -1,17 +1,17 @@
-# Server Provisioning
+# Continuous Deployment
 
 ## Usage
+
+This continuous deployment playbook assumes:
+- you are using Hetzner Cloud for your servers
+- you are using Cloudflare for your DNS records
+- your deployments are defined with docker-compose
 
 ### Install requirements
 
 1. run `pip install -r py-requirements.txt`
 1. run `ansible-galaxy role install -r requirements.yml`
 1. run `ansible-galaxy collection install -r requirements.yml`
-
-### run `docker-ubuntu-docker` role on existing host
-
-1. add your server to the inventory file `inventory-base-ubuntu-docker.yml`
-1. run `ansible-playbook -i inventory-base-ubuntu-docker.yml playbook-base-ubuntu-docker.yml`
 
 ### run all (create hcloud server, add cloudflare DNS record, configure ubuntu, deploy docker-compose project)
 

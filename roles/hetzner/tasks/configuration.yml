@@ -1,0 +1,57 @@
+---
+- name: reset values
+  set_fact:
+    hcloud_server: { "hcloud_server_info": [] }
+    hcloud_server_labels: {}
+    ansible_user: "root"
+
+- name: Gather hcloud server infos
+  hcloud_server_info:
+    api_token: "{{ hcloud_api_token }}"
+    name: "{{ config.name }}"
+  register: hcloud_server
+
+- name: extract hcloud server info
+  set_fact:
+    hcloud_server: "{{ hcloud_server.hcloud_server_info }}"
+
+- name: set current labels if server already exists
+  set_fact:
+    hcloud_server_labels: "{{ hcloud_server[0].labels }}"
+  when: hcloud_server | length > 0
+
+- name: get ansible user from hcloud server label
+  set_fact:
+    ansible_user: "{{ hcloud_server_labels.ansible_user }}"
+  when: hcloud_server_labels.ansible_user is defined
+
+- name: change add ansible_user label for next run (assumes that user will be changed to admin)
+  set_fact:
+    hcloud_server_labels: "{{ hcloud_server_labels | combine({'ansible_user': 'admin'}) }}"
+  when: hcloud_server_labels.ansible_user is not defined
+
+- name: update labels
+  set_fact:
+    hcloud_server_labels: "{{ hcloud_server_labels | combine(config.server.labels) }}"
+
+- name: do not rebuild server as default
+  set_fact:
+    hcloud_server_state: present
+
+- name: do rebuild
+  set_fact:
+    hcloud_server_state: rebuild
+  when: config.server.rebuild is defined and config.server.rebuild == true
+
+- name: check environment if rebuild needed
+  set_fact:
+    hcloud_server_state: "{{ lookup('env', config.server.rebuild | replace('$', '') | replace('{', '') | replace('}', '')) | bool | ternary('rebuild', 'present') }}"
+  when: >
+    config.server.rebuild is defined
+    and (config.server.rebuild is string)
+    and config.server.rebuild.startswith("$")
+
+- name: get ansible user from rebuild
+  set_fact:
+    ansible_user: root
+  when: hcloud_server_state == "rebuild"
