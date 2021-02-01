@@ -13,7 +13,7 @@
     server_type: "{{ config.server.server_type }}"
     image: "{{ config.server.image }}"
     location: "{{ config.server.location }}"
-    ssh_keys: "{{ config.server.inital_ssh_key_names }}"
+    ssh_keys: "{{ config.server.initial_ssh_key_names }}"
     labels: "{{ hcloud_server_labels }}"
     state: "{{ hcloud_server_state }}"
   register: hcloud_server
