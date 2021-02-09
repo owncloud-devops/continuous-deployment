@@ -2,14 +2,15 @@
 - set_fact:
     fail_recovery_possible: false
 
+- name: pull images
+  command: "docker-compose -p {{ docker_compose_project.name }} pull"
+  args:
+    chdir: "{{ docker_compose_project_path }}"
+
 - name: start docker-compose
-  docker_compose:
-    project_name: "{{ docker_compose_project.name }}"
-    project_src: "{{ docker_compose_project_path }}"
-    pull: yes
-    remove_orphans: yes
-    state: present
-    timeout: "60"
+  command: "docker-compose -p {{ docker_compose_project.name }} up -d --remove-orphans"
+  args:
+    chdir: "{{ docker_compose_project_path }}"
   register: docker_compose_up
   ignore_errors: yes
 
@@ -19,13 +20,12 @@
         fail_recovery_possible: true
 
     - set_fact:
-        network_name: "{{ docker_compose_up.msg | regex_search('`docker network create (.+)`', '\\1') | first }}"
+        network_name: "{{ docker_compose_up.stderr | regex_search('`docker network create (.+)`', '\\1') | first }}"
 
     - name: create external network
-      docker_network:
-        name: "{{ network_name }}"
+      command: "docker network create {{ network_name }}"
 
-  when: docker_compose_up.msg is defined and docker_compose_up.msg is search("Network .* declared as external, but could not be found. Please create the network manually using `docker network create .*` and try again")
+  when: docker_compose_up.failed and docker_compose_up.stderr is defined and docker_compose_up.stderr is search(".*Network .* declared as external, but could not be found. Please create the network manually using `docker network create .*` and try again.*")
 
 # recursive calling of it self in recoverable error cases as long as "until" does not work on includes
 - include_tasks: docker_compose.yml

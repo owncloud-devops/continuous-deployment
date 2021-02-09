@@ -1,12 +1,28 @@
 ---
-- name: install docker and docker-compose
+- name: install docker
   apt:
     name:
       - docker.io
-      - docker-compose
     state: present
     update_cache: yes
     cache_valid_time: 600
+  become: yes
+
+- name: remove docker-compose
+  apt:
+    name:
+      - docker-compose
+    state: absent
+    autoremove: yes
+    update_cache: yes
+    cache_valid_time: 600
+  become: yes
+
+- name: install docker-compose
+  get_url:
+    url : https://github.com/docker/compose/releases/download/1.28.2/docker-compose-Linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    mode: 'a+rx'
   become: yes
 
 - name: enable / start docker

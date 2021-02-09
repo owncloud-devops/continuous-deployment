@@ -1,10 +1,3 @@
 ---
 - name: docker prune everything
-  docker_prune:
-    containers: yes
-    images: yes
-    images_filters:
-      dangling: false
-    networks: yes
-    volumes: yes
-    builder_cache: yes
+  command: docker system prune --all --volumes --force
