@@ -1,0 +1,40 @@
+---
+- block:
+    - name: get hcloud api key from environment
+      set_fact:
+        hcloud_api_token: "{{ lookup('env', 'HCLOUD_API_TOKEN') }}"
+
+    - name: Gather hcloud server infos
+      hcloud_server_info:
+        api_token: "{{ hcloud_api_token }}"
+        name: "{{ config.name }}"
+      register: hcloud_server_info
+
+    - set_fact:
+        hcloud_server: "{{ hcloud_server_info.hcloud_server_info[0] }}"
+      when: not hcloud_server_info.failed
+
+    - file:
+        state: directory
+        path: "/tmp/{{ config.name }}/{{ carry_path }}"
+      with_items: "{{ config.server.rebuild_carry_paths }}"
+      loop_control:
+        loop_var: carry_path
+      when: hcloud_server is defined
+
+    - name: backup rebuild carry path
+      shell: "
+        rsync
+        --delay-updates
+        -F
+        --compress
+        --delete-after
+        --archive
+        --rsync-path='sudo rsync'
+        {{ hcloud_server.labels.ansible_user }}@{{ hcloud_server.ipv4_address }}:{{ carry_path }}
+        /tmp/{{ config.name }}/{{ carry_path }}"
+      with_items: "{{ config.server.rebuild_carry_paths }}"
+      loop_control:
+        loop_var: carry_path
+      when: hcloud_server is defined
+  when: config.server.rebuild_carry_paths is defined and config.server.rebuild_carry_paths | length > 0

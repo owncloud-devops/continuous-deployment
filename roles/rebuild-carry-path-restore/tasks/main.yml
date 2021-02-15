@@ -1,0 +1,19 @@
+---
+- block:
+    - name: restore rebuild carry path
+      shell: "
+        rsync
+        --delay-updates
+        -F
+        --compress
+        --delete-after
+        --archive
+        --rsync-path='sudo rsync'
+        /tmp/{{ config.name }}/{{ carry_path }}
+        {{ ansible_user }}@{{ ansible_ssh_host }}:{{ carry_path }}"
+      with_items: "{{ server.rebuild_carry_paths }}"
+      loop_control:
+        loop_var: carry_path
+      when: hcloud_server is defined
+  when: server.rebuild_carry_paths is defined and server.rebuild_carry_paths | length > 0
+  delegate_to: localhost

@@ -4,6 +4,7 @@
     hcloud_server: { "hcloud_server_info": [] }
     hcloud_server_labels: {}
     ansible_user: "root"
+    rebuilt: false
 
 - name: Gather hcloud server infos
   hcloud_server_info:
@@ -54,4 +55,5 @@
 - name: get ansible user from rebuild
   set_fact:
     ansible_user: root
+    rebuilt: true
   when: hcloud_server_state == "rebuild"
