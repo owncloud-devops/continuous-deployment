@@ -39,11 +39,6 @@
     - role: base-ubuntu-docker
 
   tasks:
-
-    - name: debug ansible_hostname
-      debug:
-        msg: "{{ ansible_hostname }}"
-
     - name: ping servers
       ping:
 
