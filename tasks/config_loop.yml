@@ -1,9 +1,7 @@
 ---
-
-# TODO: handle server creation
-#- name: save rebuild carry path
-#  include_role:
-#    name: rebuild-carry-path-backup
+- name: save rebuild carry path
+  include_role:
+    name: rebuild-carry-path-backup
 
 - name: create / check all servers
   include_role:
