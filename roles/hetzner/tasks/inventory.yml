@@ -5,4 +5,6 @@
     ansible_ssh_host: "{{ hcloud_server.ipv4_address }}"
     ansible_user: "{{ ansible_user }}"
     ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
+    rebuild: "{{ rebuild }}"
+    rebuild_carry_paths: "{{ rebuild_carry_paths }}"
   args: "{{ config.vars }}"

@@ -33,11 +33,10 @@
         timeout: 30
 
 - name: provision / deploy on servers
-  hosts: all:!localhost
+  hosts: all:!localhost:!temp
 
   roles:
     - role: base-ubuntu-docker
-
 
   tasks:
     - name: ping servers
@@ -59,6 +58,10 @@
     - name: ensure right user is logged in
       fail: "wrong user is used! should: {{ ansible_user }} | is: {{ whoami.stdout }}"
       when: whoami.stdout != ansible_user
+
+    - name: restore carry paths after rebuild
+      include_role:
+        name: rebuild-carry-path-restore
 
     - name: deploy docker-compose project
       include_role:

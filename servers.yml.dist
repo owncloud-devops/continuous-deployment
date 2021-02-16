@@ -12,6 +12,8 @@
       owner: wkloucek
       for: continuous-deployment
     rebuild: $REBUILD # / true / false
+    rebuild_carry_paths:
+      - /var/lib/docker/volumes/ocis_certs
 
   domains:
     - "*.continuous.owncloud.works"

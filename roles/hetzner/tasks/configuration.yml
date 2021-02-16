@@ -4,6 +4,12 @@
     hcloud_server: { "hcloud_server_info": [] }
     hcloud_server_labels: {}
     ansible_user: "root"
+    rebuild_carry_paths: []
+
+- name: set if rebuild carry paths are available
+  set_fact:
+    rebuild_carry_paths: "{{ config.server.rebuild_carry_paths }}"
+  when: config.server.rebuild_carry_paths is defined and config.server.rebuild_carry_paths | length > 0
 
 - name: Gather hcloud server infos
   hcloud_server_info:
@@ -34,24 +40,11 @@
   set_fact:
     hcloud_server_labels: "{{ hcloud_server_labels | combine(config.server.labels) }}"
 
-- name: do not rebuild server as default
+- name: check create mode ( present / rebuild )
   set_fact:
-    hcloud_server_state: present
-
-- name: do rebuild
-  set_fact:
-    hcloud_server_state: rebuild
-  when: config.server.rebuild is defined and config.server.rebuild == true
-
-- name: check environment if rebuild needed
-  set_fact:
-    hcloud_server_state: "{{ lookup('env', config.server.rebuild | replace('$', '') | replace('{', '') | replace('}', '')) | bool | ternary('rebuild', 'present') }}"
-  when: >
-    config.server.rebuild is defined
-    and (config.server.rebuild is string)
-    and config.server.rebuild.startswith("$")
+    hcloud_server_state: "{{ rebuild | bool | ternary('rebuild', 'present') }}"
 
 - name: get ansible user from rebuild
   set_fact:
     ansible_user: root
-  when: hcloud_server_state == "rebuild"
+  when: rebuild

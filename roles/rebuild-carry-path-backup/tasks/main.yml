@@ -1,0 +1,37 @@
+---
+- block:
+    - name: get hcloud api key from environment
+      set_fact:
+        hcloud_api_token: "{{ lookup('env', 'HCLOUD_API_TOKEN') }}"
+
+    - name: Gather hcloud server infos
+      hcloud_server_info:
+        api_token: "{{ hcloud_api_token }}"
+        name: "{{ config.name }}"
+      register: hcloud_server_info
+
+    - set_fact:
+        hcloud_server: "{{ hcloud_server_info.hcloud_server_info[0] }}"
+      when: not hcloud_server_info.failed and hcloud_server_info.hcloud_server_info | length > 0
+
+    - name: add temp hcloud server to inventory
+      add_host:
+        hostname: "temp-{{ hcloud_server.name }}"
+        ansible_ssh_host: "{{ hcloud_server.ipv4_address }}"
+        ansible_user: "{{ hcloud_server.labels.ansible_user }}"
+        ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
+        groups:
+          - "temp"
+      when: hcloud_server is defined
+
+    - name: archive and transfer backup carry path
+      include: tasks/archive-transfer.yml
+      with_items: "{{ config.server.rebuild_carry_paths }}"
+      loop_control:
+        loop_var: carry_path
+      when: hcloud_server is defined
+
+  when: >
+    rebuild
+    and config.server.rebuild_carry_paths is defined
+    and config.server.rebuild_carry_paths | length > 0
