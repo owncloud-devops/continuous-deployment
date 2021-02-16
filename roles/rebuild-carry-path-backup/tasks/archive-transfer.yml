@@ -7,16 +7,16 @@
 
 - name: archive rebuild carry path
   archive:
-    path: "{{ carry_path }}"
-    dest: "/tmp/{{ config.name }}{{ carry_path }}/archive.gz"
+    path: "{{ carry_path }}/*"
+    dest: "/tmp/{{ config.name }}{{ carry_path }}/archive.tar.gz"
     force_archive: true
   become: yes
   delegate_to: "temp-{{ hcloud_server.name }}"
 
 - name: backup rebuild carry path archive
   fetch:
-    src: "/tmp/{{ config.name }}{{ carry_path }}/archive.gz"
-    dest: "/tmp/{{ config.name }}{{ carry_path }}/archive.gz"
+    src: "/tmp/{{ config.name }}{{ carry_path }}/archive.tar.gz"
+    dest: "/tmp/{{ config.name }}{{ carry_path }}/archive.tar.gz"
     flat: yes
   become: yes
   delegate_to: "temp-{{ hcloud_server.name }}"

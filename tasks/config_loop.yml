@@ -17,9 +17,6 @@
     and (config.server.rebuild is string)
     and config.server.rebuild.startswith("$")
 
-- debug:
-    msg: "{{ rebuild }}"
-
 - name: save rebuild carry path
   include_role:
     name: rebuild-carry-path-backup

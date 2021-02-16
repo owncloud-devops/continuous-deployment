@@ -1,8 +1,9 @@
 ---
 - name: check if carry path archive exists
   stat:
-    path: "/tmp/{{ ansible_hostname }}{{ carry_path }}/archive.gz"
+    path: "/tmp/{{ inventory_hostname }}{{ carry_path }}/archive.tar.gz"
   register: archive
+  delegate_to: localhost
 
 - name: ensure path restore path exists
   file:
@@ -13,7 +14,7 @@
 
 - name: restore 
   ansible.builtin.unarchive:
-    src: "/tmp/{{ ansible_hostname }}{{ carry_path }}/archive.gz"
+    src: "/tmp/{{ ansible_hostname }}{{ carry_path }}/archive.tar.gz"
     dest: "{{ carry_path }}"
   become: yes
   ignore_errors: yes # Empty archive files are not supported.
