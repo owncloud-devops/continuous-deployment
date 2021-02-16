@@ -39,6 +39,11 @@
     - role: base-ubuntu-docker
 
   tasks:
+
+    - name: debug ansible_hostname
+      debug:
+        msg: "{{ ansible_hostname }}"
+
     - name: ping servers
       ping:
 
@@ -62,7 +67,6 @@
     - name: restore carry paths after rebuild
       include_role:
         name: rebuild-carry-path-restore
-      when: rebuilt
 
     - name: deploy docker-compose project
       include_role:

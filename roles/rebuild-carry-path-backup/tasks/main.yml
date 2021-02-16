@@ -12,7 +12,7 @@
 
     - set_fact:
         hcloud_server: "{{ hcloud_server_info.hcloud_server_info[0] }}"
-      when: not hcloud_server_info.failed
+      when: not hcloud_server_info.failed and hcloud_server_info.hcloud_server_info | length > 0
 
     - name: add temp hcloud server to inventory
       add_host:
@@ -20,7 +20,9 @@
         ansible_ssh_host: "{{ hcloud_server.ipv4_address }}"
         ansible_user: "{{ hcloud_server.labels.ansible_user }}"
         ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
-        groupnames: "temp"
+        groups:
+          - "temp"
+      when: hcloud_server is defined
 
     - name: archive and transfer backup carry path
       include: tasks/archive-transfer.yml
@@ -28,8 +30,8 @@
       loop_control:
         loop_var: carry_path
       when: hcloud_server is defined
-  
+
   when: >
-    config.server.rebuild
+    rebuild
     and config.server.rebuild_carry_paths is defined
     and config.server.rebuild_carry_paths | length > 0

@@ -1,4 +1,25 @@
 ---
+
+- name: default is to do no rebuild
+  set_fact:
+    rebuild: false
+
+- name: do rebuild if activated
+  set_fact:
+    rebuild: true
+  when: config.server.rebuild is defined and config.server.rebuild == true
+
+- name: check environment if rebuild needed
+  set_fact:
+    rebuild: "{{ lookup('env', config.server.rebuild | replace('$', '') | replace('{', '') | replace('}', '')) | bool }}"
+  when: >
+    config.server.rebuild is defined
+    and (config.server.rebuild is string)
+    and config.server.rebuild.startswith("$")
+
+- debug:
+    msg: "{{ rebuild }}"
+
 - name: save rebuild carry path
   include_role:
     name: rebuild-carry-path-backup

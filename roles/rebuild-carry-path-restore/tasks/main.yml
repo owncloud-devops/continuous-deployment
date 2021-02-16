@@ -1,11 +1,8 @@
 ---
 - block:
     - name: restore rebuild carry path
-      ansible.builtin.unarchive:
-        src: "/tmp/{{ config.name }}{{ carry_path }}/archive.gz"
-        dest: "{{ carry_path }}"
-      become: yes
-      with_items: "{{ server.rebuild_carry_paths }}"
+      include: tasks/restore.yml
+      with_items: "{{ rebuild_carry_paths }}"
       loop_control:
         loop_var: carry_path
-  when: server.rebuild_carry_paths is defined and server.rebuild_carry_paths | length > 0
+  when: rebuild and rebuild_carry_paths | length > 0
