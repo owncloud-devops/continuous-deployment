@@ -2,7 +2,6 @@
 - name: Add docker group
   group:
     name: docker
-    gid: 115
     state: present
   become: yes
 
