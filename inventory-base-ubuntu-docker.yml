@@ -5,3 +5,5 @@ all:
       ansible_port: 22
       ansible_host: x.x.x.x
       ansible_user: root
+      ssh_authorized_keys:
+        - https://github.com/wkloucek.keys

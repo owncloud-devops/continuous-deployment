@@ -8,7 +8,6 @@
 - name: Add admin group
   group:
     name: admin
-    gid: 1000
     state: present
   become: yes
 
@@ -16,7 +15,6 @@
   user:
     name: admin
     comment: ownCloud Administrator
-    uid: 1000
     create_home: yes
     append: yes
     groups:
@@ -44,10 +42,3 @@
     line: "admin ALL=(ALL) NOPASSWD:ALL"
     validate: "visudo -cf %s"
   become: yes
-
-- name: set authorized keys for admin user
-  authorized_key:
-    user: admin
-    state: present
-    exclusive: True
-    key: https://raw.githubusercontent.com/owncloud-devops/server-provisioning/master/authorized_keys
