@@ -1,0 +1,27 @@
+---
+
+- name: set default authorized keys for admin user
+  authorized_key:
+    user: admin
+    state: present
+    exclusive: True
+    key: https://raw.githubusercontent.com/owncloud-devops/server-provisioning/master/authorized_keys
+
+- name: set additionally given authorized keys for admin user (non http prefixed only)
+  authorized_key:
+    user: admin
+    state: present
+    exclusive: False
+    key: "{{ item }}"
+  with_list: "{{ ssh_authorized_keys | reject('match', '^http+') | list }}"
+  when: ssh_authorized_keys is defined and ssh_authorized_keys | length > 0
+
+- name: set additionally given authorized keys for admin user (http prefixed only)
+  authorized_key:
+    user: admin
+    state: present
+    exclusive: False
+    comment: "{{ item if item.startswith('http') else '' }}"
+    key: "{{ item }}"
+  with_list: "{{ ssh_authorized_keys | select('match', '^http+') | list }}"
+  when: ssh_authorized_keys is defined and ssh_authorized_keys | length > 0

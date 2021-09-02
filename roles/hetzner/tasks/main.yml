@@ -23,4 +23,4 @@
     hcloud_server: "{{ hcloud_server.hcloud_server }}"
 
 - name: add server to the inventory
-  include: tasks/inventory.yml
+  include: tasks/add-to-inventory.yml
