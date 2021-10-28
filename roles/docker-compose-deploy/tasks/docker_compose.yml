@@ -20,12 +20,12 @@
         fail_recovery_possible: true
 
     - set_fact:
-        network_name: "{{ docker_compose_up.stderr | regex_search('`docker network create (.+)`', '\\1') | first }}"
+        network_name: "{{ docker_compose_up.stderr | regex_search('`network (.+) declared as external, but could not be found`', '\\1') | first }}"
 
     - name: create external network
       command: "docker network create {{ network_name }}"
 
-  when: docker_compose_up.failed and docker_compose_up.stderr is defined and docker_compose_up.stderr is search(".*Network .* declared as external, but could not be found. Please create the network manually using `docker network create .*` and try again.*")
+  when: docker_compose_up.failed and docker_compose_up.stderr is defined and docker_compose_up.stderr is search(".*network .* declared as external, but could not be found.*")
 
 # recursive calling of it self in recoverable error cases as long as "until" does not work on includes
 - include_tasks: docker_compose.yml
