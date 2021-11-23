@@ -25,7 +25,7 @@
       when: hcloud_server is defined
 
     - name: archive and transfer backup carry path
-      include: tasks/archive-transfer.yml
+      include_tasks: tasks/archive-transfer.yml
       with_items: "{{ config.server.rebuild_carry_paths }}"
       loop_control:
         loop_var: carry_path

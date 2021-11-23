@@ -1,7 +1,7 @@
 ---
 - block:
     - name: restore rebuild carry path
-      include: tasks/restore.yml
+      include_tasks: tasks/restore.yml
       with_items: "{{ rebuild_carry_paths }}"
       loop_control:
         loop_var: carry_path

@@ -1,8 +1,8 @@
 ---
-- include: tasks/ubuntu.yml
-- include: tasks/docker.yml
-- include: tasks/users.yml
-- include: tasks/ssh-authorization.yml
-- include: tasks/firewall.yml
-- include: tasks/os-hardening.yml
-- include: tasks/ssh-hardening.yml
+- include_tasks: tasks/ubuntu.yml
+- include_tasks: tasks/docker.yml
+- include_tasks: tasks/users.yml
+- include_tasks: tasks/ssh-authorization.yml
+- include_tasks: tasks/firewall.yml
+- include_tasks: tasks/os-hardening.yml
+- include_tasks: tasks/ssh-hardening.yml

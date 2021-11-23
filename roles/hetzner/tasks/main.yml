@@ -4,7 +4,7 @@
     hcloud_api_token: "{{ lookup('env', 'HCLOUD_API_TOKEN') }}"
 
 - name: determine configuration for hcloud server
-  include: tasks/configuration.yml
+  include_tasks: tasks/configuration.yml
 
 - name: Create a basic server with ssh key
   hetzner.hcloud.hcloud_server:
@@ -23,4 +23,4 @@
     hcloud_server: "{{ hcloud_server.hcloud_server }}"
 
 - name: add server to the inventory
-  include: tasks/add-to-inventory.yml
+  include_tasks: tasks/add-to-inventory.yml
