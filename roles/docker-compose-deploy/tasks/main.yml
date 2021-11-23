@@ -1,6 +1,6 @@
 ---
-- include: tasks/paths.yml
-- include: tasks/git.yml
-- include: tasks/env.yml
-- include: tasks/docker_compose.yml
-- include: tasks/docker-clean.yml
+- include_tasks: tasks/paths.yml
+- include_tasks: tasks/git.yml
+- include_tasks: tasks/env.yml
+- include_tasks: tasks/docker_compose.yml
+- include_tasks: tasks/docker-clean.yml
