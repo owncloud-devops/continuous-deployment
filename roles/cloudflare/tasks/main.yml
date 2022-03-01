@@ -2,6 +2,7 @@
 - name: get cloudflare api key from environment
   set_fact:
     cloudflare_api_token: "{{ lookup('env', 'CLOUDFLARE_API_TOKEN') }}"
+  when: config.domains | length > 0
 
 - name: get server ip
   set_fact:
@@ -12,3 +13,4 @@
   with_items: "{{ config.domains }}"
   loop_control:
     loop_var: domain
+  when: config.domains | length > 0
