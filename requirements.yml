@@ -6,4 +6,4 @@ collections:
 
   - name: hetzner.hcloud
     src: https://github.com/ansible-collections/hetzner.hcloud
-    version: 1.4.1
+    version: 1.8.1
