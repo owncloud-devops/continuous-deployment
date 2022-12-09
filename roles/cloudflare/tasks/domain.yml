@@ -24,3 +24,5 @@
     value: "{{ server_ip }}"
     api_token: "{{ cloudflare_api_token }}"
     state: present
+
+# TODO: AAAA record

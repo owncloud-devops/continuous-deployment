@@ -8,6 +8,18 @@
     cache_valid_time: 600
   become: true
 
+- name: configure docker
+
+# TODO:
+# {
+#     "ipv6": true,
+#     "fixed-cidr-v6": "fd00:0:0:1::/64",
+#     "experimental": true,
+#     "ip6tables": true
+# }
+
+# TODO reload docker config if changed
+
 - name: remove docker-compose
   apt:
     name:
