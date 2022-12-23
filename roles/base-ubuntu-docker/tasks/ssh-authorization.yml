@@ -25,4 +25,4 @@
     key: "{{ item }}"
   with_list: "{{ ssh_authorized_keys | select('match', '^http+') | list }}"
   when: ssh_authorized_keys is defined and ssh_authorized_keys | length > 0
-  ignore_errors: yes # ignore invalid items in this list
+  ignore_errors: true # ignore invalid items in this list

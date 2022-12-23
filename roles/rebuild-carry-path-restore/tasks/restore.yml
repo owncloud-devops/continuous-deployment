@@ -9,13 +9,13 @@
   file:
     path: "{{ carry_path }}"
     state: directory
-  become: yes
+  become: true
   when: archive.stat.exists
 
-- name: restore 
+- name: restore
   ansible.builtin.unarchive:
     src: "/tmp/{{ ansible_hostname }}{{ carry_path }}/archive.tar.gz"
     dest: "{{ carry_path }}"
-  become: yes
-  ignore_errors: yes # Empty archive files are not supported.
+  become: true
+  ignore_errors: true # Empty archive files are not supported.
   when: archive.stat.exists

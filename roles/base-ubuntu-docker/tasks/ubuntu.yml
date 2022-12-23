@@ -4,7 +4,7 @@
     upgrade: safe
     update_cache: yes
     cache_valid_time: 600
-  become: yes
+  become: true
 
 - name: install misc packages
   apt:
@@ -15,4 +15,4 @@
     state: present
     update_cache: yes
     cache_valid_time: 600
-  become: yes
+  become: true

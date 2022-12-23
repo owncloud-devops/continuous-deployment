@@ -3,13 +3,13 @@
   group:
     name: docker
     state: present
-  become: yes
+  become: true
 
 - name: Add admin group
   group:
     name: admin
     state: present
-  become: yes
+  become: true
 
 - name: Add admin user
   user:
@@ -23,7 +23,7 @@
       - docker
     shell: /bin/bash
     state: present
-  become: yes
+  become: true
 
 - name: passwordless sudo for sudo group
   lineinfile:
@@ -32,7 +32,7 @@
     regexp: "^%sudo"
     line: "sudo ALL=(ALL) NOPASSWD:ALL"
     validate: "visudo -cf %s"
-  become: yes
+  become: true
 
 - name: passwordless sudo for admin group
   lineinfile:
@@ -41,4 +41,4 @@
     regexp: "^%admin"
     line: "admin ALL=(ALL) NOPASSWD:ALL"
     validate: "visudo -cf %s"
-  become: yes
+  become: true

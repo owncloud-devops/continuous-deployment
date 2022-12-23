@@ -27,4 +27,4 @@
     group: admin
     mode: "0744"
     state: directory
-  become: yes
+  become: true
