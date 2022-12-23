@@ -3,4 +3,4 @@
   include_role:
     name: devsec.hardening.ssh_hardening
   vars:
-    ansible_become: yes
+    ansible_become: true

@@ -1,9 +1,11 @@
 ---
 collections:
   - name: devsec.hardening
-    src: https://github.com/dev-sec/ansible-collection-hardening
-    version: 7.5.0
+    type: git
+    source: https://github.com/dev-sec/ansible-collection-hardening
+    version: 8.4.0
 
   - name: hetzner.hcloud
-    src: https://github.com/ansible-collections/hetzner.hcloud
-    version: 1.8.1
+    type: git
+    source: https://github.com/ansible-collections/hetzner.hcloud
+    version: 1.9.0

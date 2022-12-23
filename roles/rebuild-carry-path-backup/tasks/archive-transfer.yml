@@ -10,7 +10,7 @@
     path: "{{ carry_path }}/*"
     dest: "/tmp/{{ config.name }}{{ carry_path }}/archive.tar.gz"
     force_archive: true
-  become: yes
+  become: true
   delegate_to: "temp-{{ hcloud_server.name }}"
 
 - name: backup rebuild carry path archive
@@ -18,5 +18,5 @@
     src: "/tmp/{{ config.name }}{{ carry_path }}/archive.tar.gz"
     dest: "/tmp/{{ config.name }}{{ carry_path }}/archive.tar.gz"
     flat: yes
-  become: yes
+  become: true
   delegate_to: "temp-{{ hcloud_server.name }}"

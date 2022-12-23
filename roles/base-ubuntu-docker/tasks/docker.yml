@@ -6,7 +6,7 @@
     state: present
     update_cache: yes
     cache_valid_time: 600
-  become: yes
+  become: true
 
 - name: remove docker-compose
   apt:
@@ -16,18 +16,18 @@
     autoremove: yes
     update_cache: yes
     cache_valid_time: 600
-  become: yes
+  become: true
 
 - name: install docker-compose
   get_url:
-    url : https://github.com/docker/compose/releases/download/v2.0.1/docker-compose-Linux-x86_64
+    url : https://github.com/docker/compose/releases/download/v2.14.0/docker-compose-Linux-x86_64
     dest: /usr/local/bin/docker-compose
     mode: 'a+rx'
-  become: yes
+  become: true
 
 - name: enable / start docker
   systemd:
     state: started
     enabled: yes
     name: docker
-  become: yes
+  become: true

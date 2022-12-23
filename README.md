@@ -10,8 +10,8 @@ This continuous deployment playbook assumes:
 ### Install requirements
 
 1. run `pip install -r py-requirements.txt`
-1. run `ansible-galaxy role install -r requirements.yml --force`
-1. run `ansible-galaxy collection install -r requirements.yml --force`
+1. run `ansible-galaxy role install -r requirements.yml --upgrade`
+1. run `ansible-galaxy collection install -r requirements.yml --upgrade`
 
 ### run all (create hcloud server, add cloudflare DNS record, configure ubuntu, deploy docker-compose project)
 
