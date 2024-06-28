@@ -25,7 +25,7 @@
     - name: create external network
       command: "docker network create {{ network_name }}"
 
-  when: docker_compose_up.failed and docker_compose_up.stderr is defined and docker_compose_up.stderr is search(".*network .* declared as external, but could not be found.*")
+  when: docker_compose_up.failed and docker_compose_up.stderr is defined and docker_compose_up.stderr is search(".*network .* not found.*")
 
 # recursive calling of it self in recoverable error cases as long as "until" does not work on includes
 - include_tasks: docker_compose.yml
