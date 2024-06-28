@@ -20,7 +20,7 @@
         fail_recovery_possible: true
 
     - set_fact:
-        network_name: "{{ docker_compose_up.stderr | regex_search('network (.+) declared as external, but could not be found', '\\1') | first }}"
+        network_name: "{{ docker_compose_up.stderr | regex_search('Error response from daemon\: network (.+) not found', '\\1') | first }}"
 
     - name: create external network
       command: "docker network create {{ network_name }}"
