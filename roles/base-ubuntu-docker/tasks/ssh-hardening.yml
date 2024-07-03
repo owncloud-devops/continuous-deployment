@@ -4,3 +4,4 @@
     name: devsec.hardening.ssh_hardening
   vars:
     ansible_become: true
+    ssh_login_grace_time: 0s
