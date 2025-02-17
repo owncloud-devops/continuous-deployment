@@ -9,3 +9,6 @@ collections:
     type: git
     source: https://github.com/ansible-collections/hetzner.hcloud
     version: 3.0.0
+
+  - name: community.general
+    version: 10.3.0
